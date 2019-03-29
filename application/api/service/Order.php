@@ -168,4 +168,42 @@ class Order
             return true;
         }
     }
+
+    //检测订单是否重复
+    public static function repeatCheck($uid,$orderArray){
+        /*
+         * 缓存时间设置为48小时
+         * 缓存key用为‘orderMd5’+uid
+         * 1.首先检测缓存是否存在
+         * 2.存在则取出，然后进行比较
+         * 3.相同则返回订单重复的提示信息，不重复则存入缓存，继续执行
+         * 4.不相同直接存入缓存，继续执行
+         * 5.不存在缓存，则直接存入缓存。
+         * */
+        $key = 'orderMd5' . $uid;
+        $dataStr = $orderArray['cost'] . $orderArray['start_point'] . $orderArray['item_type'] . $orderArray['detail'];
+        $value = md5($dataStr);
+
+        $exist = Cache::get($key);
+        if ($exist){
+            $orderMd5Array = $exist;
+            $isRepeat = in_array($value,$orderMd5Array);
+            if ($isRepeat){
+                return false;
+            }
+            else{
+                $orderMd5Array = $exist;
+                array_push($orderMd5Array,$value);
+                cache($key,$orderMd5Array,127800);
+                return true;
+            }
+        }
+        else{
+            $orderMd5Array =[];
+            array_push($orderMd5Array,$value);
+            cache($key,$orderMd5Array,127800);
+            return true;
+        }
+
+    }
 }

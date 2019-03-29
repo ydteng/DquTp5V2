@@ -28,7 +28,7 @@ class Order
         $validate = new OrderPlace();
         $validate->goCheck();
         $uid = TokenService::getCurrentUid();
-
+        //判断每日下单上限
         $result = OrderService::limitPlaceOrderNum($uid);
         if ($result == false){
             return json(['msg' => '超过每日下单数上限']);
@@ -42,7 +42,11 @@ class Order
 
         $dataArray['end_point_id'] = $uid;
         $dataArray['order_num'] = OrderService::makeOrderNum($uid);
-
+        //判断订单是否重复
+        $result = OrderService::repeatCheck($uid,$dataArray);
+        if ($result == false){
+            return json(['msg' => '请不要重复下相同的单']);
+        }
         $user->order()->save($dataArray);
 
         OrderService::addPackOrderNum($uid);
