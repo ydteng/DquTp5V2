@@ -45,7 +45,7 @@ class Order
         //判断订单是否重复
         $result = OrderService::repeatCheck($uid,$dataArray);
         if ($result == false){
-            return json(['msg' => '请不要重复下相同的单']);
+            return json(['msg' => '请不要重复发布相同的单']);
         }
         $user->order()->save($dataArray);
 

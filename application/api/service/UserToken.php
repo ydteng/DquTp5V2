@@ -98,7 +98,6 @@ class UserToken extends Token
         throw new WeChatException([
             'msg' => $wxResult['errmsg'],
             'errorCode' => $wxResult['errcode']
-
         ]);
     }
 }
