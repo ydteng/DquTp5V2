@@ -12,6 +12,6 @@ namespace app\lib\exception;
 class ParameterException extends BaseException
 {
     public $code = 400;
-    public $errorCode = 10000;
+    public $errorCode = 40010;
     public $msg = "参数为空";
 }

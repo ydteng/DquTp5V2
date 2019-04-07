@@ -11,7 +11,7 @@ namespace app\lib\exception;
 
 class CancelException extends BaseException
 {
-    public $code = 401;
-    public $errorCode = 10078;
+    public $code = 403;
+    public $errorCode = 10010;
     public $msg = "订单已被取消，不能重复取消";
 }

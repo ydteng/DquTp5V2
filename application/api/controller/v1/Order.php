@@ -9,6 +9,7 @@
 namespace app\api\controller\v1;
 
 
+use app\api\controller\BaseController;
 use app\api\validate\IDMustBePositiveInt;
 use app\api\validate\OrderPlace;
 use app\api\model\User as UserModel;
@@ -16,12 +17,19 @@ use app\api\model\Order as OrderModel;
 use app\api\service\Token as TokenService;
 use app\api\service\Order as OrderService;
 use app\api\validate\PagingParameter;
-use app\lib\exception\pickException;
+use app\lib\exception\PlaceOrderException;
 use app\lib\exception\UserException;
-use think\Cache;
+use app\lib\SuccessMessage;
 
-class Order
+
+class Order extends BaseController
 {
+    protected $beforeActionList = [
+        'checkPackerScope' => ['only' => 'packorder']
+    ];
+
+
+
     //下单
     public function PlaceOrder()
     {
@@ -45,7 +53,7 @@ class Order
         //判断订单是否重复
         $result = OrderService::repeatCheck($uid,$dataArray);
         if ($result == false){
-            return json(['msg' => '请不要重复发布相同的单']);
+            throw new PlaceOrderException();
         }
         $user->order()->save($dataArray);
 
@@ -91,7 +99,7 @@ class Order
         return $detail;
 
     }
-    //订单删除接口
+    //删除接口
     public function deleteOrder(){
         (new IDMustBePositiveInt())->goCheck();
         //为了让require验证规则起作用，所以没有在函数里面传至，要不tp5会先检测有没有传值，报id参数错误的错
@@ -100,8 +108,10 @@ class Order
         if (!$uid){
             throw new UserException();
         }
-        $msg = OrderModel::deleteOrder($id);
-        return json(['msg'=>$msg]);
+        $result = OrderModel::deleteOrder($id);
+        if ($result){
+            return new SuccessMessage();
+        }
     }
     //接单接口
     public function packOrder(){
@@ -114,7 +124,7 @@ class Order
             throw new UserException();
         }
         if ($uid == $receiverID){
-            throw new pickException();
+            //throw new pickException();
         }
         $order = OrderModel::setPacker($id,$uid);
         return $order;
@@ -128,8 +138,10 @@ class Order
         if (!$uid){
             throw new UserException();
         }
-        $result = OrderService::changConfirmStatus($id,$uid);
-        return ['msg' => $result];
+        $result = OrderModel::confirm($id,$uid);
+        if ($result){
+            return new SuccessMessage();
+        }
     }
     //获取我接取的订单列表
     public function getPackedOrder(){
@@ -154,6 +166,9 @@ class Order
             throw new UserException();
         }
         $result = OrderModel::cancel($id,$uid);
-        return $result;
+        UserModel::subScore($uid,3);
+        if ($result){
+            return new SuccessMessage();
+        }
     }
 }

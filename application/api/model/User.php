@@ -30,4 +30,23 @@ class User extends BaseModel
         return $user;
     }
 
+    //增加积分
+    public static function addScore($uid,$score){
+        $user = self::where(['id' => $uid])->find();
+        $changeScore = $user->score + $score;
+        $result = $user->save(['score' => $changeScore]);
+        if (!$result){
+            throw new MissException();
+        }
+    }
+    //减少积分
+    public static function subScore($uid,$score){
+        $user = self::where(['id' => $uid])->find();
+        $changeScore = $user->score - $score;
+        $result = $user->save(['score' => $changeScore]);
+        if (!$result){
+            throw new MissException();
+        }
+    }
+
 }

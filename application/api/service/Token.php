@@ -9,10 +9,12 @@
 namespace app\api\service;
 
 
+use app\lib\exception\ForbiddenException;
 use app\lib\exception\TokenException;
 use think\Cache;
 use think\Exception;
 use think\Request;
+use app\lib\enum\ScopeEnum;
 
 class Token
 {
@@ -24,6 +26,36 @@ class Token
         $salt = config('secure.salt');
 
         return md5($randChars.$timestamp.$salt);
+    }
+
+//检测接单权限
+    public static function needPackerScope()
+    {
+        $scope = self::getCurrentTokenVar('scope');
+        if ($scope){
+            if ($scope == ScopeEnum::Super) {
+                return true;
+            } else {
+                throw new ForbiddenException();
+            }
+        } else {
+            throw new TokenException();
+        }
+    }
+//检测普通用户权限
+    public static function needPrimaryScope()
+    {
+        $scope = self::getCurrentTokenVar('scope');
+        if ($scope) {
+            if ($scope >= ScopeEnum::User) {
+                return true;
+            }
+            else{
+                throw new ForbiddenException();
+            }
+        } else {
+            throw new TokenException();
+        }
     }
 
 

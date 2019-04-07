@@ -11,7 +11,7 @@ namespace app\lib\exception;
 
 class pickException extends BaseException
 {
-    public $code = 400;
-    public $errorCode = 10099;
+    public $code = 403;
+    public $errorCode = 50010;
     public $msg = "不能接取自己的订单";
 }

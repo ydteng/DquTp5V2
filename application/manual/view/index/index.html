@@ -21,6 +21,8 @@
 
                 <p id="%E6%8E%A5%E5%8F%A3%E6%89%8B%E5%86%8C-toc" style="margin-left:0px;"><a href="#%E6%8E%A5%E5%8F%A3%E6%89%8B%E5%86%8C" rel="nofollow" target="_self">接口手册</a></p>
 
+                <p id="%E5%BC%82%E5%B8%B8%E8%BF%94%E5%9B%9E%E4%BF%A1%E6%81%AF-toc" style="margin-left:40px;"><a href="#%E5%BC%82%E5%B8%B8%E8%BF%94%E5%9B%9E%E4%BF%A1%E6%81%AF" rel="nofollow" target="_self">返回信息</a></p>
+
                 <p id="1.%E5%85%AC%E5%85%B1%E6%9F%A5%E8%AF%A2%E7%B1%BB-toc" style="margin-left:40px;"><a href="#1.%E5%85%AC%E5%85%B1%E6%9F%A5%E8%AF%A2%E7%B1%BB" rel="nofollow" target="_self">1.公共查询类</a></p>
 
                 <p id="%E8%8E%B7%E5%8F%96banner%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89-toc" style="margin-left:80px;"><a href="#%E8%8E%B7%E5%8F%96banner%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89" rel="nofollow" target="_self">获取banner（方法：get）</a></p>
@@ -61,17 +63,23 @@
 
                 <p id="%E5%8F%96%E6%B6%88%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89-toc" style="margin-left:80px;"><a href="#%E5%8F%96%E6%B6%88%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89" rel="nofollow" target="_self">取消订单（方法：post）</a></p>
 
-                <hr id="hr-toc"><blockquote>
-                <p><strong><span style="color:#f33b45;">前言说明：</span></strong></p>
+                <p id="%C2%A0%E7%A1%AE%E8%AE%A4%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89-toc" style="margin-left:80px;"><a href="#%C2%A0%E7%A1%AE%E8%AE%A4%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89" rel="nofollow" target="_self">确认订单（方法：post）</a></p>
 
-                <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; 1.所有订单超过24小时都将失效，不能进行接单，确认订单，取消订单操作。</span></strong></p>
+                <p id="%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%EF%BC%9A-toc" style="margin-left:0px;"><a href="#%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%EF%BC%9A" rel="nofollow" target="_self">更新日志：</a></p>
 
-                <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp;（</span></strong><strong><span style="color:#f33b45;">前端需要对状态码做判断，进行限制性操作，状态码为“1000”“5000”“5001”“6000”的订单不能进行删除订单以外的其他操作。此情况一般不会发生，但为了防止他人恶意发送数据而在服务器做的防护）</span></strong></p>
+                <hr id="hr-toc"><p>&nbsp;</p>
 
-                <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; 2.不能把状态码为“1000”“5000”“5001”“6000”的订单的发单人信息显示给接单人。</span></strong></p>
+                <blockquote>
+                    <p><strong><span style="color:#f33b45;">前言说明：</span></strong></p>
 
-                <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; 3.只有状态码为“3000”“4000”“4001”的订单才能有确认订单操作</span></strong></p>
-            </blockquote>
+                    <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; 1.所有订单超过24小时都将失效，不能进行接单，确认订单，取消订单操作。</span></strong></p>
+
+                    <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp;（</span></strong><strong><span style="color:#f33b45;">前端需要对状态码做判断，进行限制性操作，状态码为“1000”“5000”“5001”“6000”的订单不能进行删除订单以外的其他操作。此情况一般不会发生，但为了防止他人恶意发送数据而在服务器做的防护）</span></strong></p>
+
+                    <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; 2.不能把状态码为“1000”“5000”“5001”“6000”的订单的发单人信息显示给接单人。</span></strong></p>
+
+                    <p><strong><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; 3.只有状态码为“3000”“4000”“4001”的订单才能有确认订单操作</span></strong></p>
+                </blockquote>
 
                 <blockquote>
                     <p>状态码 status 释义：</p>
@@ -118,10 +126,93 @@
                         }</p>
                 </blockquote>
 
-                <h2 id="1.%E5%85%AC%E5%85%B1%E6%9F%A5%E8%AF%A2%E7%B1%BB"><a name="t1"></a>1.公共查询类</h2>
+                <h2 id="%E5%BC%82%E5%B8%B8%E8%BF%94%E5%9B%9E%E4%BF%A1%E6%81%AF"><a name="t1"></a>返回信息</h2>
+
+                <blockquote>
+<pre>----------取消订单异常
+httpCode：403
++++++++++++++++++++++++++++++
+errorCode：10010      释义：订单已取消不能重复取消
+errorCode：10011      释义：订单非法取消
+<span style="color:#f33b45;">errorCode：10012      释义：订单已被接取，发单人无法取消   ***</span>
+
+
+----------确认订单异常
+httpCode：403
++++++++++++++++++++++++++++++
+errorCode：20010      释义：请不要确认已经完成的订单或失效的订单
+errorCode：20011      释义：非法操作，未接取得订单无法确认
+errorCode：20012      释义：请不要重复确认一个订单
+
+
+
+
+----------请求不存在异常
+httpCode：404
++++++++++++++++++++++++++++++
+errorCode：30010      释义：请求的内容不存在
+
+
+----------参数错误异常
+httpCode：400
++++++++++++++++++++++++++++++
+errorCode：40010      释义：参数为空
+
+
+----------接单异常
+httpCode：403
++++++++++++++++++++++++++++++
+<span style="color:#f33b45;">errorCode：50010      释义：不能接取自己的订单        ***</span>
+
+----------下单异常
+httpCode：403
++++++++++++++++++++++++++++++
+<span style="color:#f33b45;">errorCode：60010      释义：不能重复发布相同的订单     ***</span>
+
+
+----------超时异常（订单超过24小时）
+httpCode：403
++++++++++++++++++++++++++++++
+errorCode：70010      释义：不能操作超过24小时的订单
+
+
+----------令牌token异常
+httpCode：401
++++++++++++++++++++++++++++++
+errorCode：80010      释义：Token已过期或无效的Token或未传入Token
+errorCode：80011      释义：服务器缓存异常
+
+
+----------用户类异常
+httpCode：404
++++++++++++++++++++++++++++++
+errorCode：90010      释义：用户不存在
+
+
+----------微信内部异常
+httpCode：400
++++++++++++++++++++++++++++++
+errorCode：11010      释义：微信服务接口调用失败
+
+
+----------删除订单异常
+httpCode：403
++++++++++++++++++++++++++++++
+errorCode：12010      释义：删除失败
+
+
+----------操作成功
+httpCode：201
++++++++++++++++++++++++++++++
+errorCode：0      释义：操作成功</pre>
+                </blockquote>
+
+                <blockquote>&nbsp;</blockquote>
+
+                <h2 id="1.%E5%85%AC%E5%85%B1%E6%9F%A5%E8%AF%A2%E7%B1%BB"><a name="t2"></a>1.公共查询类</h2>
 
                 <ul><li>
-                    <h3 id="%E8%8E%B7%E5%8F%96banner%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t2"></a>获取banner（方法：get）</h3>
+                    <h3 id="%E8%8E%B7%E5%8F%96banner%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t3"></a>获取banner（方法：get）</h3>
                 </li>
                 </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/banner" rel="nofollow" target="_blank">https://camserv.cn/api/v1/banner</a></p>
@@ -140,7 +231,7 @@
                 </tr><tr><td>url</td>
                     <td>图片路径</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E8%8E%B7%E5%8F%96%E7%9C%81%E4%BB%BD%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t3"></a>获取省份（方法：get）</h3>
+                <h3 id="%E8%8E%B7%E5%8F%96%E7%9C%81%E4%BB%BD%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t4"></a>获取省份（方法：get）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/province" rel="nofollow" target="_blank">https://camserv.cn/api/v1/province</a></p>
@@ -159,7 +250,7 @@
                 </tr><tr><td>name</td>
                     <td>省份名字</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t4"></a>获取学校（方法：get）</h3>
+                <h3 id="%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t5"></a>获取学校（方法：get）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/school/:id" rel="nofollow" target="_blank">https://camserv.cn/api/v1/school/:id</a></p>
@@ -189,10 +280,10 @@
                     <td>学校所在城市</td>
                 </tr></tbody></table></div><h2>&nbsp;</h2>
 
-                <h2 id="2.%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E7%B1%BB"><a name="t6"></a>2.登录注册类</h2>
+                <h2 id="2.%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E7%B1%BB"><a name="t7"></a>2.登录注册类</h2>
 
                 <ul><li>
-                    <h3 id="%E8%8E%B7%E5%8F%96Token%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t7"></a>获取Token（方法：post）</h3>
+                    <h3 id="%E8%8E%B7%E5%8F%96Token%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t8"></a>获取Token（方法：post）</h3>
                 </li>
                 </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/token/user" rel="nofollow" target="_blank">https://camserv.cn/api/v1/token/user</a></p>
@@ -211,7 +302,7 @@
                 </tr></thead><tbody><tr><td>token</td>
                     <td>服务器生成的令牌</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="Token%E5%90%88%E6%B3%95%E6%80%A7%E9%AA%8C%E8%AF%81%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t8"></a>Token合法性验证（方法：post）</h3>
+                <h3 id="Token%E5%90%88%E6%B3%95%E6%80%A7%E9%AA%8C%E8%AF%81%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t9"></a>Token合法性验证（方法：post）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/token/verify" rel="nofollow" target="_blank">https://camserv.cn/api/v1/token/verify</a></p>
@@ -231,10 +322,10 @@
 
                 <p>&nbsp;</p>
 
-                <h2 id="3.%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%B1%BB"><a name="t9"></a>3.用户信息类</h2>
+                <h2 id="3.%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%B1%BB"><a name="t10"></a>3.用户信息类</h2>
 
                 <ul><li>
-                    <h3 id="%E6%B7%BB%E5%8A%A0%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%94%B6%E8%B4%A7%E5%9C%B0%E5%9D%80%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t10"></a>添加个人信息及收货地址（方法：post）</h3>
+                    <h3 id="%E6%B7%BB%E5%8A%A0%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E5%8F%8A%E6%94%B6%E8%B4%A7%E5%9C%B0%E5%9D%80%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t11"></a>添加个人信息及收货地址（方法：post）</h3>
                 </li>
                 </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/address" rel="nofollow" target="_blank">https://camserv.cn/api/v1/address</a></p>
@@ -268,7 +359,7 @@
                     <td>成功返回“ok”<span style="color:#f33b45;">（主要）</span></td>
                 </tr><tr><td>errorCode</td>
                     <td>错误码</td>
-                </tr></tbody></table></div><hr><h3 id="%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E5%9C%B0%E5%9D%80%E4%BF%A1%E6%81%AF%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t11"></a>获取用户地址信息（方法：get）</h3>
+                </tr></tbody></table></div><hr><h3 id="%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E5%9C%B0%E5%9D%80%E4%BF%A1%E6%81%AF%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t12"></a>获取用户地址信息（方法：get）</h3>
 
                 <blockquote>
                     <p><a href="https://camserv.cn/api/v1/address" rel="nofollow" target="_blank">https://camserv.cn/api/v1/address</a></p>
@@ -303,7 +394,7 @@
                     <td style="width:250px;">name</td>
                     <td>学校名称</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E8%8E%B7%E5%8F%96%E4%B8%AA%E4%BA%BA%E8%AE%A2%E5%8D%95%E4%BF%A1%E6%81%AF%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t12"></a>获取个人订单信息（方法：get）</h3>
+                <h3 id="%E8%8E%B7%E5%8F%96%E4%B8%AA%E4%BA%BA%E8%AE%A2%E5%8D%95%E4%BF%A1%E6%81%AF%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t13"></a>获取个人订单信息（方法：get）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order/:page" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/:page</a></p>
@@ -334,7 +425,7 @@
                 </tr><tr><td style="width:134px;">order_num</td>
                     <td>订单号</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E8%8E%B7%E5%8F%96%E6%88%91%E6%8E%A5%E5%8F%96%E7%9A%84%E8%AE%A2%E5%8D%95%E5%88%97%E8%A1%A8%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t13"></a>获取我接取的订单列表（方法：get）</h3>
+                <h3 id="%E8%8E%B7%E5%8F%96%E6%88%91%E6%8E%A5%E5%8F%96%E7%9A%84%E8%AE%A2%E5%8D%95%E5%88%97%E8%A1%A8%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t14"></a>获取我接取的订单列表（方法：get）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order/packedOrder/:page" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/packedOrder/:page</a></p>
@@ -366,10 +457,10 @@
                     <td>订单号</td>
                 </tr></tbody></table></div><p>&nbsp;</p>
 
-                <h2 id="4.%E5%85%AC%E5%85%B1%E8%AE%A2%E5%8D%95%E7%B1%BB"><a name="t14"></a>4.公共订单类</h2>
+                <h2 id="4.%E5%85%AC%E5%85%B1%E8%AE%A2%E5%8D%95%E7%B1%BB"><a name="t15"></a>4.公共订单类</h2>
 
                 <ul><li>
-                    <h3 id="%E4%B8%8B%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t15"></a>下单（方法：post）</h3>
+                    <h3 id="%E4%B8%8B%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t16"></a>下单（方法：post）</h3>
                 </li>
                 </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order</a></p>
@@ -396,7 +487,7 @@
                 </tr><tr><td style="width:246px;">msg<span style="color:#f33b45;">（超过发单数时返回）</span></td>
                     <td style="width:603px;">超过每日下单数上限</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E5%BE%85%E6%8E%A5%E5%8F%96%E7%9A%84%E8%AE%A2%E5%8D%95%E5%88%97%E8%A1%A8"><a name="t16"></a>获取所有待接取的订单列表（方法：get）</h3>
+                <h3 id="%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E5%BE%85%E6%8E%A5%E5%8F%96%E7%9A%84%E8%AE%A2%E5%8D%95%E5%88%97%E8%A1%A8"><a name="t17"></a>获取所有待接取的订单列表（方法：get）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order/all/:page" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/all/:page</a></p>
@@ -431,7 +522,7 @@
                         <p>订单号</p>
                     </td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E8%8E%B7%E5%8F%96%E8%AE%A2%E5%8D%95%E8%AF%A6%E6%83%85%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t17"></a>获取订单详情（方法：get）</h3>
+                <h3 id="%E8%8E%B7%E5%8F%96%E8%AE%A2%E5%8D%95%E8%AF%A6%E6%83%85%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89"><a name="t18"></a>获取订单详情（方法：get）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order/detail/:id" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/detail/:id</a></p>
@@ -466,7 +557,7 @@
                 </tr><tr><td style="width:134px;"><span style="color:#f33b45;">detail</span></td>
                     <td>订单详情</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E5%88%A0%E9%99%A4%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Adelete%EF%BC%89"><a name="t18"></a>删除订单（方法：delete）</h3>
+                <h3 id="%E5%88%A0%E9%99%A4%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Adelete%EF%BC%89"><a name="t19"></a>删除订单（方法：delete）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order/delete" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/delete</a></p>
@@ -485,7 +576,7 @@
                 </tr></thead><tbody><tr><td style="width:206px;">msg</td>
                     <td style="width:643px;">成功：&nbsp; &nbsp;删除成功&nbsp; &nbsp;；&nbsp; &nbsp;失败：删除失败或其他异常</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E6%8E%A5%E5%8F%96%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t19"></a>接取订单（方法：post）</h3>
+                <h3 id="%E6%8E%A5%E5%8F%96%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t20"></a>接取订单（方法：post）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order/pack" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/pack</a></p>
@@ -495,7 +586,9 @@
 
                 <p><span style="color:#f33b45;">限制：1.接取订单后才能看发单人的地址信息</span></p>
 
-                <p><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2.不能接取自己发的订单</span></p>
+                <p><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2.不能接取自己发的订单，返回信息：“不能接取自己的 ”</span></p>
+
+                <p><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3.48小时之内不能发布同样的订单，返回信息：“请不要发布相同的订单”</span></p>
 
                 <div class="table-box"><table border="1" cellpadding="1" cellspacing="1"><caption>参数值</caption>
                     <thead><tr><th scope="col" style="width:137px;">字段</th>
@@ -524,7 +617,7 @@
                 </tr><tr><td style="width:134px;">detail</td>
                     <td>订单详情</td>
                 </tr></tbody></table></div><hr><ul><li>
-                <h3 id="%E5%8F%96%E6%B6%88%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t20"></a>取消订单（方法：post）</h3>
+                <h3 id="%E5%8F%96%E6%B6%88%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t21"></a>取消订单（方法：post）</h3>
             </li>
             </ul><blockquote>
                 <p><a href="https://camserv.cn/api/v1/order/cancel" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/cancel</a></p>
@@ -532,7 +625,7 @@
 
                 <p><span style="color:#f33b45;">说明：需要在header中传入token，订单id需要在body中传入</span></p>
 
-                <p><span style="color:#f33b45;">限制：1.已被接取的订单，发单方无法取</span></p>
+                <p><span style="color:#f33b45;">限制：1.已被接取的订单，发单方无法取，返回信息：“订单已被接取，作为发单人不能取消”</span></p>
 
                 <div class="table-box"><table border="1" cellpadding="1" cellspacing="1"><caption>参数值</caption>
                     <thead><tr><th scope="col" style="width:137px;">字段</th>
@@ -543,8 +636,42 @@
                 <thead><tr><th scope="col" style="width:206px;">字段</th>
                     <th scope="col" style="width:643px;">释义</th>
                 </tr></thead><tbody><tr><td style="width:206px;">msg</td>
-                    <td style="width:643px;">成功：&nbsp; &nbsp;取消成功&nbsp; &nbsp;；&nbsp; &nbsp;失败：取消失败或其他异常</td>
-                </tr></tbody></table></div>            </div>
+                    <td style="width:643px;">
+                        <p>成功：&nbsp; &nbsp;取消成功&nbsp; &nbsp;；&nbsp; &nbsp;失败：取消失败或其他异常</p>
+                    </td>
+                </tr></tbody></table></div><hr><ul><li>
+                <h3 id="%C2%A0%E7%A1%AE%E8%AE%A4%E8%AE%A2%E5%8D%95%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89"><a name="t22"></a>&nbsp;确认订单（方法：post）</h3>
+            </li>
+            </ul><blockquote>
+                <p><a href="https://camserv.cn/api/v1/order/confirm" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/confirm</a></p>
+            </blockquote>
+
+                <p><span style="color:#f33b45;">说明：需要在header中传入token，订单id需要在body中传入</span></p>
+
+                <p><span style="color:#f33b45;">限制：1.订单超过24小时无法再确认</span></p>
+
+                <div class="table-box"><table border="1" cellpadding="1" cellspacing="1"><caption>参数值</caption>
+                    <thead><tr><th scope="col" style="width:137px;">字段</th>
+                        <th scope="col">释义</th>
+                    </tr></thead><tbody><tr><td style="width:137px;">id</td>
+                        <td>订单id</td>
+                    </tr></tbody></table></div><div class="table-box"><table border="1" cellpadding="1" cellspacing="1"><caption>返回值</caption>
+                <thead><tr><th scope="col" style="width:206px;">字段</th>
+                    <th scope="col" style="width:643px;">释义</th>
+                </tr></thead><tbody><tr><td style="width:206px;">msg</td>
+                    <td style="width:643px;">
+                        <p>成功：&nbsp; &nbsp;确认成功&nbsp; &nbsp;；&nbsp; &nbsp;失败：其他异常</p>
+                    </td>
+                </tr></tbody></table></div><h1 id="%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%EF%BC%9A"><a name="t23"></a>更新日志：</h1>
+
+                <hr><p>2019-3-30</p>
+
+                <ul><li>手册加入确认订单接口</li>
+                    <li>加入请求返回信息解释</li>
+                </ul><p>2019-3-29&nbsp;</p>
+
+                <ul><li>添加订单重复的功能，完全相同的一个订单在48小时之内不能重复发布。</li>
+                </ul>            </div>
         </div>
     </article>
 </div>

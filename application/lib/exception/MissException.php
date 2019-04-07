@@ -14,6 +14,6 @@ namespace app\lib\exception;
 class MissException extends BaseException
 {
     public $code = 404;
+    public $errorCode = 30010;
     public $msg = '请求的内容不存在';
-    public $errorCode = 10001;
 }

@@ -91,5 +91,4 @@ function subTime($order,$time){
         $hour = floor((strtotime($endTime)-strtotime($startTime))/$D);
         return $hour;
     }
-
 }

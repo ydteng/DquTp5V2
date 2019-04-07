@@ -9,6 +9,7 @@
 namespace app\api\service;
 
 
+use app\api\model\User;
 use app\lib\exception\TokenException;
 use app\lib\exception\WeChatException;
 use think\Exception;
@@ -68,8 +69,8 @@ class UserToken extends Token
         $request = cache($key,$value,$expire_in);
         if(!$request){
             throw new TokenException([
-                'mes' => '服务器缓存异常',
-                'errorCode' => 10005
+                'msg' => '服务器缓存异常',
+                'errorCode' => 80011
             ]);
         }
 
@@ -81,7 +82,10 @@ class UserToken extends Token
     {
         $cacheValue = $wxResult;
         $cacheValue['uid'] = $uid;
-        $cacheValue['scope'] = 16;
+        $user = new UserModel();
+        $user = $user->where(['id' => $uid])->find();
+        $scope = $user->scope;
+        $cacheValue['scope'] = $scope;
         return $cacheValue;
     }
 

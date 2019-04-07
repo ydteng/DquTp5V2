@@ -12,6 +12,6 @@ namespace app\lib\exception;
 class TimeOutException extends BaseException
 {
     public $code = 401;
-    public $errorCode = 10088;
-    public $msg = "不能取消超过24小时的订单";
+    public $errorCode = 70010;
+    public $msg = "不能操作超过24小时的订单";
 }

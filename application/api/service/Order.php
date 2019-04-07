@@ -8,6 +8,7 @@
 
 namespace app\api\service;
 use app\api\model\Order as OrderModel;
+use app\api\model\User as UserModel;
 use app\lib\exception\CancelException;
 use app\lib\exception\confirmException;
 use app\lib\exception\TimeOutException;
@@ -18,14 +19,14 @@ class Order
 {
     //生成订单号  格式为当前日期+10000+uid+随机数
     public static function makeOrderNum($uid){
-        $num = 10000+$uid;
+        $num = 10000 + $uid;
         $strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $timestamp = $strPol[rand(0,25)].date('Ymd',time()).$num.rand(11111111,99999999);
         return $timestamp;
     }
 
     //改变确定订单状态
-    public static function changConfirmStatus($id,$uid){
+    public static function changConfirmStatus($id,$uid,$order){
         /*
          * 改变流程
          * 首先获取订单的接单人id和发单人id
@@ -35,8 +36,6 @@ class Order
          * 否则改变为完成状态6000
          *
          * */
-        $msg = '确认成功';
-        $order = OrderModel::get($id);
         $status = $order->status;
 
         //计算订单时间
@@ -49,10 +48,13 @@ class Order
 
         //为了保险加上的时间检测
         if ($hour >= 24){
-            throw new confirmException(['msg' => '订单接单超过24小时无法确定']);
+            throw new TimeOutException();
         }
         if ($status == 2000){
-            throw new confirmException(['msg' => '非法操作，未接取的订单无法确认']);
+            throw new confirmException([
+                'errorCode' => '20011',
+                'msg' => '非法操作，未接取的订单无法确认'
+            ]);
         }
         if ($status == 6000 && $status == 1000){
             throw new confirmException();
@@ -61,27 +63,42 @@ class Order
         if ($uid == $receiverID){
             if ($status == 4000){
                 $order->save(['status' => 6000]);
-                return $msg;
+                //接单方确认加分
+                UserModel::addScore($receiverID,5);
+                UserModel::addScore($packerID,5);
+                return true;
             }
             else if($status == 4001){
-                throw new confirmException(['msg' => '请不要重复确认订单']);
+                throw new confirmException([
+                    'errorCode' => '20012',
+                    'msg' => '请不要重复确认一个订单'
+                ]);
             }
             else{
                 $order->save(['status' => 4001]);
-                return $msg;
+                //接单方确认加分
+                UserModel::addScore($receiverID,5);
+                UserModel::addScore($packerID,5);
+                return true;
             }
         }
         else if ($uid == $packerID){
             if ($status == 4001){
                 $order->save(['status' => 6000]);
-                return $msg;
+                //接单方在发单方确认后确认
+                UserModel::addScore($packerID,1);
+                return true;
             }
             else if($status == 4000){
-                throw new confirmException(['msg' => '请不要重复确认订单']);
+                throw new confirmException([
+                    'errorCode' => '20012',
+                    'msg' => '请不要重复确认一个订单'
+                ]);
             }
             else{
+                //仅接单方确认不加分
                 $order->save(['status' => 4000]);
-                return $msg;
+                return true;
             }
         }
         else{
@@ -153,19 +170,25 @@ class Order
             throw  new TimeOutException();
         }
         else if ($uid == $userID && $status == 3000){
-            return false;
+            throw new CancelException([
+                'errorCode' =>'10012',
+                'msg' => '订单已被接取，发单人无法取消'
+            ]);
         }
         else if ($uid == $userID && $status == 2000){
+            return true;
+        }
+        else if ($uid == $packerID && $status == 3000){
             return true;
         }
         else if ($status == 1000){
             throw new CancelException();
         }
-        else if($uid != $packerID){
-            throw new CancelException(['msg' => '非法取消订单']);
-        }
         else{
-            return true;
+            throw new CancelException([
+                'errorCode' =>'10011',
+                'msg' => '非法取消订单'
+            ]);
         }
     }
 

@@ -9,9 +9,12 @@
 namespace app\api\model;
 
 
+use app\lib\exception\DeleteException;
 use app\lib\exception\MissException;
 use app\api\service\TimeOut as TimeOutService;
 use app\api\service\Order as OrderService;
+use app\lib\exception\UserException;
+
 class Order extends BaseModel
 {
     protected $hidden = ['end_point_id','user_id','packer_id','create_time','update_time','delete_time'];
@@ -24,7 +27,7 @@ class Order extends BaseModel
     public static function getReceiverByOrderID($id){
         $receiver = self::where(['id' => $id])->find();
         if (!$receiver){
-            throw new MissException(['msg' => '发单人不存在']);
+            throw new MissException();
         }
         $receiverID = $receiver->user_id;
         return $receiverID;
@@ -33,12 +36,12 @@ class Order extends BaseModel
     public static function getPackerByOrderID($id){
         $packer = self::where(['id' => $id])->find();
         if (!$packer){
-            throw new MissException(['msg' => '接单人不存在']);
+            throw new MissException();
         }
         $packerID = $packer->packer_id;
         return $packerID;
     }
-
+    //获取所有订单
     public static function getAllOrders($page)
     {
         $orders = self::with('endPoint')->where(['status'=>'2000'])
@@ -51,7 +54,7 @@ class Order extends BaseModel
         return $orders;
     }
 
-
+    //获取个人订单
     public static function getUserOrder($page,$uid)
     {
         $orders = self::with('endPoint')->where(['user_id' => $uid])
@@ -63,7 +66,7 @@ class Order extends BaseModel
         }
         return $orders;
     }
-
+    //获取订单详情
     public static function getDetail($id){
         $detail = self::with('endPoint')->where(['id' => $id])->select();
         if (!$detail){
@@ -80,10 +83,10 @@ class Order extends BaseModel
         }
         $result = $order->delete();
         if (!$result){
-            return '删除失败';
+            throw new DeleteException();
         }
         else{
-            return '删除成功';
+            return true;
         }
     }
     //修改订单接单人
@@ -107,6 +110,14 @@ class Order extends BaseModel
         }
         return $orders;
     }
+    //确认订单
+    public static function confirm($id,$uid){
+        $order = self::where(['id' => $id])->find();
+
+        $result = OrderService::changConfirmStatus($id,$uid,$order);
+
+        return $result;
+    }
     //取消订单
     public static function cancel($id,$uid){
         $order = self::where(['id' => $id])->find();
@@ -116,10 +127,7 @@ class Order extends BaseModel
         $result = OrderService::changeCancelStatus($order,$uid);
         if ($result == true){
             $order->save(['status' => 1000]);
-            return ['msg' => '取消成功'];
-        }
-        else{
-            return ['msg' => '订单已被接取，作为发单人不能取消'];
+            return true;
         }
     }
 }
