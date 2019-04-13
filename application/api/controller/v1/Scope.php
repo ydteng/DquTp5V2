@@ -30,7 +30,7 @@ class Scope
         {
             throw new MissException();
         }
-        return $packerInfo->status;
+        return ['status' =>$packerInfo->status];
 
     }
     //申请接单

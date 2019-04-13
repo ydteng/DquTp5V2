@@ -15,7 +15,7 @@ class Email
 // 实例化PHPMailer核心类
         $mail = new PHPMailer();
 // 是否启用smtp的debug进行调试 开发环境建议开启 生产环境注释掉即可 默认关闭debug调试模式
-        $mail->SMTPDebug = 1;
+        //$mail->SMTPDebug = 1;
 // 使用smtp鉴权方式发送邮件
         $mail->isSMTP();
 // smtp需要鉴权 这个必须是true
@@ -39,7 +39,7 @@ class Email
 // 邮件正文是否为html编码 注意此处是一个方法
         $mail->isHTML(true);
 // 设置收件人邮箱地址
-        $mail->addAddress('291746925@qq.com');
+        $mail->addAddress('885381434@qq.com');
 // 添加多个收件人 则多次调用方法即可
         //$mail->addAddress('87654321@163.com');
 // 添加该邮件的主题
@@ -49,7 +49,7 @@ class Email
 // 为该邮件添加附件
 //        $mail->addAttachment('./example.pdf');
 // 发送邮件 返回状态
-        $status = $mail->send();
+        $mail->send();
         return true;
     }
 }
