@@ -1,0 +1,15 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: TenYoDun
+ * Date: 2019/4/13
+ * Time: 11:03
+ */
+
+namespace app\api\model;
+
+
+class PackerInfo extends BaseModel
+{
+
+}

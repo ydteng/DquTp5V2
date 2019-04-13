@@ -56,7 +56,8 @@ class Order extends BaseController
             throw new PlaceOrderException();
         }
         $user->order()->save($dataArray);
-
+        //发单数加一
+        $user->save(['send_num' => $user->send_num + 1]);
         OrderService::addPackOrderNum($uid);
 
         return json(['order_num' => $dataArray['order_num']],201);
@@ -127,6 +128,9 @@ class Order extends BaseController
             //throw new pickException();
         }
         $order = OrderModel::setPacker($id,$uid);
+        //接单数加一
+        $user = UserModel::get($uid);
+        $user->save(['pack_num' => $user->pack_num + 1]);
         return $order;
     }
     //确认送达接口

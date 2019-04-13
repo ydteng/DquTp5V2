@@ -24,6 +24,11 @@ class User extends BaseModel
         return $this->hasMany('Order', 'user_id', 'id');
     }
 
+    public function packer()
+    {
+        return $this->hasOne('PackerInfo', 'user_id', 'id');
+    }
+
     public static function getByOpenID($openid)
     {
         $user = self::where('openid','=',$openid)->find();

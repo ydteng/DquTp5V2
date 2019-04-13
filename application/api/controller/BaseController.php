@@ -13,7 +13,6 @@ use think\Controller;
 use app\api\service\Token;
 class BaseController extends Controller
 {
-
     protected function checkPrimaryScope()
     {
         Token::needPrimaryScope();

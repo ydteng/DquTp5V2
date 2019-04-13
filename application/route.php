@@ -31,6 +31,7 @@ use think\Route;
     Route::post('api/:version/order/confirm','api/:version.Order/confirmOrder');
     Route::post('api/:version/order/cancel','api/:version.Order/cancelOrder');
 
+    Route::post('api/:version/scope/apply','api/:version.Scope/applyScope');
 
 
 
