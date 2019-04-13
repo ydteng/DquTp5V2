@@ -12,7 +12,6 @@ namespace app\api\controller\v1;
 use app\api\model\PackerInfo;
 use app\api\service\Email;
 use app\api\validate\ApplyScope;
-use app\lib\exception\MissException;
 use app\lib\exception\UserException;
 use app\api\service\Token as TokenService;
 use app\api\model\User as UserModel;
@@ -28,7 +27,7 @@ class Scope
         $packerInfo = $packerInfo->where(['user_id' => $uid])->find();
         if (!$packerInfo)
         {
-            throw new MissException();
+            return ['status' =>0];
         }
         return ['status' =>$packerInfo->status];
 
