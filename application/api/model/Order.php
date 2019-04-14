@@ -113,7 +113,9 @@ class Order extends BaseModel
     //确认订单
     public static function confirm($id,$uid){
         $order = self::where(['id' => $id])->find();
-
+        if (!$order){
+            throw new MissException();
+        }
         $result = OrderService::changConfirmStatus($id,$uid,$order);
 
         return $result;

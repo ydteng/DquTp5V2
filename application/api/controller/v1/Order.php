@@ -25,7 +25,7 @@ use app\lib\SuccessMessage;
 class Order extends BaseController
 {
     protected $beforeActionList = [
-        'checkPackerScope' => ['only' => 'packorder']
+        'checkPackerScope' => ['only' => 'packorder,getorderdetail']
     ];
 
 

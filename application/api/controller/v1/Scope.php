@@ -44,6 +44,7 @@ class Scope
         $dataArray = $validate->getDataByRule(input('post.'));
         $reason = $dataArray['reason'];
         unset($dataArray['reason']);
+        $dataArray['status'] = 100;
         $packerInfo = $user->packer;
         if (!$packerInfo){
             $user->packer()->save($dataArray);
