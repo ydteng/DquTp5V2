@@ -11,5 +11,5 @@ namespace app\api\model;
 
 class PackerInfo extends BaseModel
 {
-
+    protected $hidden = ['id','user_id','status','create_time','update_time','delete_time'];
 }

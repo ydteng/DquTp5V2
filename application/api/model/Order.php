@@ -21,8 +21,14 @@ class Order extends BaseModel
 
     public function endPoint()
     {
-        return $this->hasOne('UserAddress','user_id','end_point_id');
+        return $this->hasOne('UserAddress','user_id','user_id');
     }
+
+    public function packerAddress()
+    {
+        return $this->hasOne('PackerInfo','user_id','packer_id');
+    }
+
     //获取发单人id
     public static function getReceiverByOrderID($id){
         $receiver = self::where(['id' => $id])->find();
@@ -67,12 +73,12 @@ class Order extends BaseModel
         return $orders;
     }
     //获取订单详情
-    public static function getDetail($id){
-        $detail = self::with('endPoint')->where(['id' => $id])->select();
+    public static function getDetail($id,$uid){
+        $detail = self::with('endPoint,packerAddress')->where(['id' => $id])->find();
         if (!$detail){
             throw new MissException();
         }
-        myHidden($detail,['end_point.id','end_point.nickname','end_point.mobile']);
+        $detail = OrderService::detailFrom($uid,$detail);
         return $detail;
     }
     //删除订单
@@ -81,7 +87,8 @@ class Order extends BaseModel
         if (!$order){
             throw new MissException();
         }
-        $result = $order->delete();
+        //$result = $order->delete();
+        $result = false;
         if (!$result){
             throw new DeleteException();
         }
@@ -91,11 +98,11 @@ class Order extends BaseModel
     }
     //修改订单接单人
     public static function setPacker($id,$uid){
-        $order = self::with('endPoint')->where(['id' => $id])->select();
+        $order = self::with('endPoint')->where(['id' => $id])->find();
         if (!$order){
             throw new MissException();
         }
-        $order['0']->save(['packer_id' => $uid,'status' => 3000]);
+        $order->save(['packer_id' => $uid,'status' => 3000]);
         myHidden($order,['user_id','packer_id',]);
         return $order;
     }

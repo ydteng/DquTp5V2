@@ -17,6 +17,7 @@ use app\api\model\Order as OrderModel;
 use app\api\service\Token as TokenService;
 use app\api\service\Order as OrderService;
 use app\api\validate\PagingParameter;
+use app\lib\exception\pickException;
 use app\lib\exception\PlaceOrderException;
 use app\lib\exception\UserException;
 use app\lib\SuccessMessage;
@@ -96,7 +97,7 @@ class Order extends BaseController
         if (!$uid){
             throw new UserException();
         }
-        $detail = OrderModel::getDetail($id);
+        $detail = OrderModel::getDetail($id,$uid);
         return $detail;
 
     }
@@ -125,7 +126,7 @@ class Order extends BaseController
             throw new UserException();
         }
         if ($uid == $receiverID){
-            //throw new pickException();
+            throw new pickException();
         }
         $order = OrderModel::setPacker($id,$uid);
         //接单数加一

@@ -229,4 +229,33 @@ class Order
         }
 
     }
+    //订单详情需要带有谁的地址，
+    public static function detailFrom($uid,$order){
+        /*
+         * 1.如果uid=user_id 则显示接单人的信息
+         * 2.如果uid=packer_id 则显示发单人的信息
+         * 3.超过24小时信息不显示
+         * */
+
+        $receiverID = $order->user_id;
+        $packerID = $order->packer_id;
+
+        $hour = subTime($order,'H');
+        if ($hour >=24){
+            $order->hidden(['end_point.nickname','end_point.mobile','packer_address']);
+            return $order;
+        }
+        if ($uid == $receiverID){
+            $order->hidden(['end_point.nickname','end_point.mobile']);
+            return $order;
+        }
+        if ($uid == $packerID){
+            $order->hidden(['packer_address']);
+            return $order;
+        }
+
+
+
+    }
+
 }
