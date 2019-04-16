@@ -239,18 +239,22 @@ class Order
 
         $receiverID = $order->user_id;
         $packerID = $order->packer_id;
-
+        $status = $order->status;
         $hour = subTime($order,'H');
         if ($hour >=24){
             $order->hidden(['end_point.nickname','end_point.mobile','packer_address']);
             return $order;
         }
-        if ($uid == $receiverID){
+        else if ($uid == $receiverID && ($status != '2000' && $status != '1000')){
             $order->hidden(['end_point.nickname','end_point.mobile']);
             return $order;
         }
-        if ($uid == $packerID){
+        else if ($uid == $packerID && ($status != '2000' && $status != '1000')){
             $order->hidden(['packer_address']);
+            return $order;
+        }
+        else{
+            $order->hidden(['end_point.nickname','end_point.mobile','packer_address']);
             return $order;
         }
 

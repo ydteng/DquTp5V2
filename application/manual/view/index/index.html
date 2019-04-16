@@ -32,8 +32,6 @@
 
                 <p id="%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89-toc" style="margin-left:80px;"><a href="#%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Aget%EF%BC%89" rel="nofollow" target="_self">获取学校（方法：get）</a></p>
 
-                <p id="-toc" style="margin-left:40px;">&nbsp;</p>
-
                 <p id="2.%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E7%B1%BB-toc" style="margin-left:40px;"><a href="#2.%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E7%B1%BB" rel="nofollow" target="_self">2.登录注册类</a></p>
 
                 <p id="%E8%8E%B7%E5%8F%96Token%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89-toc" style="margin-left:80px;"><a href="#%E8%8E%B7%E5%8F%96Token%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%9Apost%EF%BC%89" rel="nofollow" target="_self">获取Token（方法：post）</a></p>
@@ -89,8 +87,7 @@
                 <blockquote>
                     <p>状态码 status 释义：</p>
 
-                    <p>1000.失败（订单人接取）<br>
-                        1001.订单取消</p>
+                    <p>1000.失败</p>
 
                     <p>2000.等待接单</p>
 
@@ -475,6 +472,8 @@
 
                 <p><span style="color:#f33b45;">限制：1.只显示24小时之内的订单（此情况一般不会发生，为了防止他人恶意发送数据而在服务器做的防护）</span></p>
 
+                <p><span style="color:#f33b45;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2.只显示同一学校的订单</span></p>
+
                 <div class="table-box"><table border="1" cellpadding="1" cellspacing="1"><caption>参数值</caption>
                     <thead><tr><th scope="col" style="width:159px;">字段</th>
                         <th scope="col" style="width:690px;">释义</th>
@@ -506,7 +505,7 @@
                 <p><a href="https://camserv.cn/api/v1/order/detail/:id" rel="nofollow" target="_blank">https://camserv.cn/api/v1/order/detail/:id</a></p>
             </blockquote>
 
-                <p><span style="color:#f33b45;">说明：需要在header中传入token</span></p>
+                <p><span style="color:#f33b45;">说明：需要在header中传入token，不管什么状态都显示终点详情。</span></p>
 
                 <div class="table-box"><table border="1" cellpadding="1" cellspacing="1"><caption>参数值</caption>
                     <thead><tr><th scope="col" style="width:287px;">字段</th>
@@ -524,8 +523,10 @@
                     <td>订单费用</td>
                 </tr><tr><td style="width:134px;">start_point</td>
                     <td>订单起点</td>
-                </tr><tr><td style="width:134px;">end_point</td>
-                    <td>订单终点信息</td>
+                </tr><tr><td style="width:134px;"><span style="color:#f33b45;">end_point</span></td>
+                    <td>订单终点信息，即发单方信息，只有在订单被接取后且查看人是接单人才显示发单人昵称和手机号等详细信息，<span style="color:#f33b45;">不管什么状态都显示终点详情</span></td>
+                </tr><tr><td style="width:134px;"><span style="color:#f33b45;">packer_address</span></td>
+                    <td>接单方信息，只有在订单被接取后且查看人是发单人才显示</td>
                 </tr><tr><td style="width:134px;">item_type</td>
                     <td>订单物品类型（如快递，餐饮等）</td>
                 </tr><tr><td style="width:134px;">order_num</td>
@@ -642,7 +643,12 @@
                     </td>
                 </tr></tbody></table></div><h1 id="%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%EF%BC%9A"><a name="t25"></a>更新日志：</h1>
 
-                <hr><p>2019-4-13</p>
+                <hr><p>2019-4-16</p>
+
+                <ul><li>修复某些接口的状态码与手册描述不一致的错误</li>
+                    <li>添加获取详情可以查看接单人信息，根据具体情况显示不同的个人信息，请查看接口相关字段定义释义</li>
+                    <li>增加返回订单所有代接取订单列表的学校限制，即只返回和自己学校相同的订单。</li>
+                </ul><p>2019-4-13</p>
 
                 <ul><li>添加“获取申请接单权限状态”接口</li>
                     <li>添加“申请接单权限”接口</li>

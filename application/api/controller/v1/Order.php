@@ -49,7 +49,9 @@ class Order extends BaseController
         }
         $dataArray = $validate->getDataByRule(input('post.'));
 
-        $dataArray['end_point_id'] = $uid;
+        //$dataArray['end_point_id'] = $uid;
+        $dataArray['province_id'] = $user->address->province_id;
+        $dataArray['school_id'] = $user->address->school_id;
         $dataArray['order_num'] = OrderService::makeOrderNum($uid);
         //判断订单是否重复
         $result = OrderService::repeatCheck($uid,$dataArray);
@@ -83,7 +85,7 @@ class Order extends BaseController
         if (!$uid){
             throw new UserException();
         }
-        $orders = OrderModel::getAllOrders($page);
+        $orders = OrderModel::getAllOrders($page,$uid);
         return $orders;
 
 

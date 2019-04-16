@@ -14,10 +14,11 @@ use app\lib\exception\MissException;
 use app\api\service\TimeOut as TimeOutService;
 use app\api\service\Order as OrderService;
 use app\lib\exception\UserException;
+use think\Build;
 
 class Order extends BaseModel
 {
-    protected $hidden = ['end_point_id','user_id','packer_id','create_time','update_time','delete_time'];
+    protected $hidden = ['user_id','packer_id','province_id','school_id','create_time','update_time','delete_time'];
 
     public function endPoint()
     {
@@ -48,9 +49,13 @@ class Order extends BaseModel
         return $packerID;
     }
     //获取所有订单
-    public static function getAllOrders($page)
+    public static function getAllOrders($page,$uid)
     {
-        $orders = self::with('endPoint')->where(['status'=>'2000'])
+        //只返回同一学校的订单
+        $address = new UserAddress();
+        $address = $address->where(['user_id' => $uid])->find();
+        $schoolID = $address->school_id;
+        $orders = self::with('endPoint')->where(['status'=>'2000','school_id' => $schoolID])
             ->whereTime('create_time','>','-1 days')
             ->page($page,10)->order('create_time asc')->select();
         myHidden($orders,['detail','end_point.id','end_point.nickname','end_point.mobile']);
