@@ -29,7 +29,14 @@ class Order extends BaseModel
     {
         return $this->hasOne('PackerInfo','user_id','packer_id');
     }
-
+    //根据id获取订单
+    public static function getOrderByOrderID($id){
+        $order = self::where(['id' => $id])->find();
+        if (!$order){
+            throw new MissException();
+        }
+        return $order;
+    }
     //获取发单人id
     public static function getReceiverByOrderID($id){
         $receiver = self::where(['id' => $id])->find();

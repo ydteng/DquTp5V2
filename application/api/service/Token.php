@@ -15,6 +15,7 @@ use think\Cache;
 use think\Exception;
 use think\Request;
 use app\lib\enum\ScopeEnum;
+use app\api\model\Order as OrderModel;
 
 class Token
 {
@@ -31,7 +32,17 @@ class Token
 //检测接单权限
     public static function needPackerScope()
     {
+        $id = input('param.id');
+        $order = OrderModel::getOrderByOrderID($id);
+        $receiverID = $order->user_id;
+        $packerID= $order->packer_id;
         $scope = self::getCurrentTokenVar('scope');
+        $uid = self::getCurrentUid();
+
+        if ($uid == $receiverID || $uid == $packerID){
+            return true;
+        }
+
         if ($scope){
             if ($scope == ScopeEnum::Super) {
                 return true;
