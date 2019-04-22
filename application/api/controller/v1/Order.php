@@ -119,14 +119,10 @@ class Order extends BaseController
         (new IDMustBePositiveInt())->goCheck();
         //为了让require验证规则起作用，所以没有在函数里面传至，要不tp5会先检测有没有传值，报id参数错误的错
         $uid = TokenService::getCurrentUid();
-        OrderService::limitPackOrderNum($uid);
         $id = request()->param('id');
-        $receiverID = OrderModel::getReceiverByOrderID($id);
+        OrderService::limitPackOrderNum($uid);
         if (!$uid){
             throw new UserException();
-        }
-        if ($uid == $receiverID){
-            throw new packException();
         }
         $order = OrderModel::setPacker($id,$uid);
         //接单数加一

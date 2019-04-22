@@ -67,6 +67,7 @@ class Order extends BaseModel
             ->whereTime('create_time','>','-1 days')
             ->page($page,10)->order('create_time asc')->select();
         myHidden($orders,['detail','end_point.id','end_point.nickname','end_point.mobile']);
+        showTime($orders);
         if (!$orders){
             $orders =[];
         }
@@ -83,6 +84,7 @@ class Order extends BaseModel
         if (!$orders){
             return [];
         }
+        showTime($orders);
         return $orders;
     }
     //获取订单详情
@@ -92,6 +94,7 @@ class Order extends BaseModel
             throw new MissException();
         }
         $detail = OrderService::detailFrom($uid,$detail);
+        showTime($detail);
         return $detail;
     }
     //删除订单
@@ -115,6 +118,15 @@ class Order extends BaseModel
         if (!$order){
             throw new MissException();
         }
+        //添加超过24小时无法接取
+        $hour = subTime($order,'H');
+        if ($hour >=24){
+            throw new packException(['msg' => '订单超过24小时无法接取','errorCode' =>'']);
+        }
+        if($uid == $order->user_id){
+            throw new packException();
+        }
+
         else if($order->packer_id){
             throw new packException(['msg' => '订单已被接取，不能重复接取','errorCode' => '50011']);
         }

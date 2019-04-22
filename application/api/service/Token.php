@@ -9,6 +9,7 @@
 namespace app\api\service;
 
 
+use app\api\validate\IDMustBePositiveInt;
 use app\lib\exception\ForbiddenException;
 use app\lib\exception\TokenException;
 use think\Cache;
@@ -32,6 +33,7 @@ class Token
 //检测接单权限
     public static function needPackerScope()
     {
+        (new IDMustBePositiveInt())->goCheck();
         $id = input('param.id');
         $order = OrderModel::getOrderByOrderID($id);
         $receiverID = $order->user_id;

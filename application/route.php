@@ -25,8 +25,10 @@ use think\Route;
     Route::get('api/:version/order/[:page]','api/:version.Order/getUserOrder');
     Route::get('api/:version/order/all/[:page]','api/:version.Order/getAllOrder');
     Route::get('api/:version/order/detail/[:id]','api/:version.Order/getOrderDetail');
-    Route::delete('api/:version/order/delete','api/:version.Order/deleteOrder');
+
     Route::post('api/:version/order/pack','api/:version.Order/packOrder');
+    Route::delete('api/:version/order/delete','api/:version.Order/deleteOrder');
+
     Route::get('api/:version/order/packedOrder/[:page]','api/:version.Order/getPackedOrder');
     Route::post('api/:version/order/confirm','api/:version.Order/confirmOrder');
     Route::post('api/:version/order/cancel','api/:version.Order/cancelOrder');
