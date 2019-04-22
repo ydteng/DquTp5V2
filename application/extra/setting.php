@@ -9,4 +9,6 @@
 return [
     'img_prefix' => 'https://camserv.cn/images',
     'token_expire_in' => '7200',
+    'limitPlaceNum' => '20',
+    'limitPackNum' => '20',
 ];

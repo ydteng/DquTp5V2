@@ -11,6 +11,8 @@ use app\api\model\Order as OrderModel;
 use app\api\model\User as UserModel;
 use app\lib\exception\CancelException;
 use app\lib\exception\confirmException;
+use app\lib\exception\packException;
+use app\lib\exception\PlaceOrderException;
 use app\lib\exception\TimeOutException;
 use think\Cache;
 use think\Exception;
@@ -115,13 +117,13 @@ class Order
          * 3.如果未超过24小时且单数不超过10，则直接进行后面的操作，下单成功则单数加一。
          * 4.若单数超过10，则返回‘超过每日下单数限制’
          * */
+        $limitPlaceNum = config('setting.limitPlaceNum');
         $BeforeDate = date('Y-m-d') .' '. '00:00:00';
         $currentDate = date('Y-m-d H:i:s');
-        $packOrderNum = 0;
-        $cacheValue = ['date' => $BeforeDate,'Num' => $packOrderNum];
+        $cacheValue = ['date' => $BeforeDate,'placeNum' => 0,'packNum' => 0];
         $exit = Cache::get($uid);
         if (!$exit){
-            $cacheValue = json_encode($cacheValue );
+            $cacheValue = json_encode($cacheValue);
             cache($uid,$cacheValue);
             return true;
         }
@@ -137,27 +139,82 @@ class Order
                 cache($uid,$cacheValue);
                 return true;
             }
-            else if($subDate < 24 && $value['Num'] < 20){
+            else if($subDate < 24 && $value['placeNum'] < $limitPlaceNum){
                 return true;
             }
-            else if($subDate < 24 && $value['Num'] >= 20){
-                return false;
+            else if($subDate < 24 && $value['placeNum'] >= $limitPlaceNum){
+                throw new PlaceOrderException(['msg' => '超过每日发布订单数上限','errorCode' => '60012']);
+            }
+        }
+    }
+
+    //限制接单数
+    public static function limitPackOrderNum($uid){
+        /*
+         * 1.检测缓存是否存在，不存在则把今天的凌晨时间存到缓存中。继续后面的下单操作，下单成功则单数加一
+         * 2.存在则取出缓存中的时间与现在的时间做对比，若超过24小时则把今天的凌晨时间存到缓存中，继续后面的操作，下单成功则单数加一
+         * 3.如果未超过24小时且单数不超过10，则直接进行后面的操作，下单成功则单数加一。
+         * 4.若单数超过10，则返回‘超过每日下单数限制’
+         * */
+        $limitPackNum = config('setting.limitPackNum');
+        $BeforeDate = date('Y-m-d') .' '. '00:00:00';
+        $currentDate = date('Y-m-d H:i:s');
+        $cacheValue = ['date' => $BeforeDate,'placeNum' => 0,'packNum' => 0];
+        $exit = Cache::get($uid);
+        if (!$exit){
+            $cacheValue = json_encode($cacheValue);
+            cache($uid,$cacheValue);
+            return true;
+        }
+        else{
+            $value = Cache::get($uid);
+            if (!is_array($value)){
+                $value = json_decode($value,true);
+            }
+            $subDate = floor((strtotime($currentDate)-strtotime($value['date']))/3600);
+
+            if ($subDate >= 24){
+                $cacheValue = json_encode($cacheValue );
+                cache($uid,$cacheValue);
+                return true;
+            }
+            else if($subDate < 24 && $value['packNum'] < $limitPackNum){
+                return true;
+            }
+            else if($subDate < 24 && $value['packNum'] >= $limitPackNum){
+                throw new packException(['msg' => '超过每日接单数上限','errorCode' => '50012']);
             }
         }
     }
 
     //增加发单数
-    public static function addPackOrderNum($uid){
+    public static function addPlaceOrderNum($uid){
+        $limitPlaceNum = config('setting.limitPlaceNum');
         $val = Cache::get($uid);
         if (!is_array($val)){
             $val = json_decode($val,true);
         }
-        if($val['Num']<20){
-            $val['Num'] = $val['Num']+1;
+        if($val['placeNum']<$limitPlaceNum){
+            $val['placeNum'] = $val['placeNum']+1;
         }
         $val = json_encode($val);
         cache($uid,$val);
     }
+
+    //增加接单数
+    public static function addPackOrderNum($uid){
+        $limitPackNum = config('setting.limitPackNum');
+        $val = Cache::get($uid);
+        if (!is_array($val)){
+            $val = json_decode($val,true);
+        }
+        if($val['packNum']<$limitPackNum){
+            $val['packNum'] = $val['packNum']+1;
+        }
+        $val = json_encode($val);
+        cache($uid,$val);
+    }
+
 
     //取消订单的状态
     public static function changeCancelStatus($order,$uid){

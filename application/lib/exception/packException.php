@@ -9,7 +9,7 @@
 namespace app\lib\exception;
 
 
-class pickException extends BaseException
+class packException extends BaseException
 {
     public $code = 403;
     public $errorCode = 50010;

@@ -17,7 +17,7 @@ use app\api\model\Order as OrderModel;
 use app\api\service\Token as TokenService;
 use app\api\service\Order as OrderService;
 use app\api\validate\PagingParameter;
-use app\lib\exception\pickException;
+use app\lib\exception\packException;
 use app\lib\exception\PlaceOrderException;
 use app\lib\exception\UserException;
 use app\lib\SuccessMessage;
@@ -38,10 +38,7 @@ class Order extends BaseController
         $validate->goCheck();
         $uid = TokenService::getCurrentUid();
         //判断每日下单上限
-        $result = OrderService::limitPlaceOrderNum($uid);
-        if ($result == false){
-            return json(['msg' => '超过每日下单数上限']);
-        }
+        OrderService::limitPlaceOrderNum($uid);
 
         $user = UserModel::get($uid);
         if (!$user){
@@ -61,7 +58,7 @@ class Order extends BaseController
         $user->order()->save($dataArray);
         //发单数加一
         $user->save(['send_num' => $user->send_num + 1]);
-        OrderService::addPackOrderNum($uid);
+        OrderService::addPlaceOrderNum($uid);
 
         return json(['order_num' => $dataArray['order_num']],201);
     }
@@ -122,16 +119,18 @@ class Order extends BaseController
         (new IDMustBePositiveInt())->goCheck();
         //为了让require验证规则起作用，所以没有在函数里面传至，要不tp5会先检测有没有传值，报id参数错误的错
         $uid = TokenService::getCurrentUid();
+        OrderService::limitPackOrderNum($uid);
         $id = request()->param('id');
         $receiverID = OrderModel::getReceiverByOrderID($id);
         if (!$uid){
             throw new UserException();
         }
         if ($uid == $receiverID){
-            throw new pickException();
+            throw new packException();
         }
         $order = OrderModel::setPacker($id,$uid);
         //接单数加一
+        OrderService::addPackOrderNum($uid);
         $user = UserModel::get($uid);
         $user->save(['pack_num' => $user->pack_num + 1]);
         return $order;

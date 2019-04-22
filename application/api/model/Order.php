@@ -13,7 +13,7 @@ use app\lib\exception\DeleteException;
 use app\lib\exception\MissException;
 use app\api\service\TimeOut as TimeOutService;
 use app\api\service\Order as OrderService;
-use app\lib\exception\pickException;
+use app\lib\exception\packException;
 use app\lib\exception\UserException;
 use think\Build;
 
@@ -116,7 +116,7 @@ class Order extends BaseModel
             throw new MissException();
         }
         else if($order->packer_id){
-            throw new pickException(['msg' => '订单已被接取，不能重复接取','errorCode' => '50011']);
+            throw new packException(['msg' => '订单已被接取，不能重复接取','errorCode' => '50011']);
         }
         $order->save(['packer_id' => $uid,'status' => 3000]);
         myHidden($order,['user_id','packer_id',]);
