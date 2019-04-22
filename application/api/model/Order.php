@@ -151,7 +151,6 @@ class Order extends BaseModel
         }
         $result = OrderService::changeCancelStatus($order,$uid);
         if ($result == true){
-            $order->save(['status' => 1000]);
             return true;
         }
     }

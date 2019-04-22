@@ -176,9 +176,11 @@ class Order
             ]);
         }
         else if ($uid == $userID && $status == 2000){
+            $order->save(['status' => 1000]);
             return true;
         }
         else if ($uid == $packerID && $status == 3000){
+            $order->save(['status' => 1001]);
             return true;
         }
         else if ($status == 1000){
