@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Email
 {
-    public static function send($dataArr){
+    public static function send($str,$dataArr){
 // 实例化PHPMailer核心类
         $mail = new PHPMailer();
 // 是否启用smtp的debug进行调试 开发环境建议开启 生产环境注释掉即可 默认关闭debug调试模式
@@ -29,7 +29,7 @@ class Email
 // 设置发送的邮件的编码
         $mail->CharSet = 'UTF-8';
 // 设置发件人昵称 显示在收件人邮件的发件人邮箱地址前的发件人姓名
-        $mail->FromName = '接单权限申请';
+        $mail->FromName = '一校派服务器';
 // smtp登录的账号 QQ邮箱即可
         $mail->Username = '885381434@qq.com';
 // smtp登录的密码 使用生成的授权码
@@ -43,7 +43,7 @@ class Email
 // 添加多个收件人 则多次调用方法即可
         $mail->addAddress('wliyang1022@163.com');
 // 添加该邮件的主题
-        $mail->Subject = '有用户正在申请接单权限请尽快处理';
+        $mail->Subject = $str;
 // 添加邮件正文
         $mail->Body = self::msg($dataArr);
 // 为该邮件添加附件

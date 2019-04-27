@@ -62,6 +62,10 @@ class Order extends BaseModel
         //只返回同一学校的订单
         $address = new UserAddress();
         $address = $address->where(['user_id' => $uid])->find();
+        if (!$address)
+        {
+            return [];
+        }
         $schoolID = $address->school_id;
         $orders = self::with('endPoint')->where(['status'=>'2000','school_id' => $schoolID])
             ->whereTime('create_time','>','-1 days')
@@ -143,6 +147,7 @@ class Order extends BaseModel
         if (!$orders){
             return [];
         }
+        showTime($orders);
         return $orders;
     }
     //确认订单

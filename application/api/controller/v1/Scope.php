@@ -55,7 +55,12 @@ class Scope
         $dataArray['reason'] = $reason;
         $dataArray['send_num'] = $user->send_num;
         $dataArray['pack_num'] = $user->pack_num;
-        Email::send($dataArray);
+        Email::send('有人申请接单权限，请尽快处理',$dataArray);
+        return new SuccessMessage();
+    }
+    public function feedback(){
+        $dataArray = input('post.');
+        Email::send('意见反馈',$dataArray);
         return new SuccessMessage();
     }
 }

@@ -29,7 +29,7 @@ class UserAddress extends BaseModel
 
         $address = self::with('province,school')->where(['user_id'=>$uid])->select();
         if(!$address){
-            throw new MissException();
+            return [];
         }
         //$address = $address['0']->visible(['address']);
         $address = $address['0']->hidden(['school.provinceId','school.level','school.city']);

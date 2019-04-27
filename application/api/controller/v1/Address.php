@@ -77,7 +77,7 @@ class Address
         $uid = TokenService::getCurrentUid();
         $address = UserAddressModel::getUserAddress($uid);
         if (!$address){
-            throw new MissException();
+            return [];
         }
         return $address;
     }

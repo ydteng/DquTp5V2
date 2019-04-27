@@ -35,7 +35,7 @@ use think\Route;
 
     Route::post('api/:version/scope/apply','api/:version.Scope/applyScope');
     Route::get('api/:version/scope/getStatus','api/:version.Scope/getStatus');
-
+    Route::post('api/:version/feedback','api/:version.Scope/feedback');
 
 
 
