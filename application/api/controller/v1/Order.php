@@ -83,7 +83,14 @@ class Order extends BaseController
             throw new UserException();
         }
         $orders = OrderModel::getAllOrders($page,$uid);
-        return $orders;
+        if (!$orders){
+            return [
+                'data'=>[]
+            ];
+        }
+        return [
+            'data' => $orders
+        ];
 
 
     }
