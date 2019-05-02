@@ -31,6 +31,9 @@ class Scope
         if (!$packerInfo)
         {
             return ['status' =>0];
+        }else if($packerInfo->status == 0)
+        {
+            return ['status' =>0];
         }
         return ['status' =>$packerInfo->status];
 

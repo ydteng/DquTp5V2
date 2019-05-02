@@ -103,7 +103,7 @@ function showTime($order){
             $confirmTime = $value->update_time;
             $status = $value->status;
 
-            if ($status == 4001 || $status == 5000 || $status == 6000){
+            if ($status == 4000 ||$status == 4001 || $status == 5000 || $status == 5001 || $status == 6000){
                 $value->placeTime = $placeTime;
                 $value->confirmTime = $confirmTime;
             }
@@ -117,7 +117,7 @@ function showTime($order){
         $confirmTime = $order->update_time;
         $status = $order->status;
 
-        if ($status == 4001 || $status == 5000 || $status == 6000){
+        if ($status == 4000 ||$status == 4001 || $status == 5000 || $status == 5001 || $status == 6000){
             $order->placeTime = $placeTime;
             $order->confirmTime = $confirmTime;
         }
