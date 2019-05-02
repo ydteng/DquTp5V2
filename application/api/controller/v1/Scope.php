@@ -28,12 +28,19 @@ class Scope
         $uid = TokenService::getCurrentUid();
         $packerInfo = new PackerInfoModel();
         $packerInfo = $packerInfo->where(['user_id' => $uid])->find();
+
         if (!$packerInfo)
         {
             return ['status' =>0];
-        }else if($packerInfo->status == 0)
-        {
-            return ['status' =>0];
+        }
+
+        //权限申请失败超过24小时
+        $hour = subTime($packerInfo,'H');
+        if ($hour>=24 && $packerInfo->status == 200){
+            $packerInfo->save(['status' =>0]);
+        }
+        if ($hour>=48 && $packerInfo->status == 100){
+            $packerInfo->save(['status' =>0]);
         }
         return ['status' =>$packerInfo->status];
 
@@ -48,6 +55,7 @@ class Scope
             throw new UserException();
         }
         $dataArray = $validate->getDataByRule(input('post.'));
+        $dataArray['uid'] = $uid;
         $reason = $dataArray['reason'];
         unset($dataArray['reason']);
         $dataArray['status'] = 100;
@@ -68,6 +76,7 @@ class Scope
     public function feedback(){
         $uid = TokenService::getCurrentUid();
         $dataArray = input('post.');
+        $dataArray['uid'] = $uid;
         $key = 'feedback' . $uid;
         $exist = Cache::get($key);
         if (!$exist){
