@@ -19,6 +19,10 @@ class TimeOut
             $status = $orders[$key]->status;
 
             if ($hour >= 24){
+                if($status == 1001){
+                    $orders[$key]->status = 1004;
+                    $orders[$key]->save(['status' => 1004]);
+                }
                 if($status == 2000){
                     $orders[$key]->status = 1003;
                     $orders[$key]->save(['status' => 1003]);
