@@ -45,7 +45,9 @@ class Order extends BaseController
             throw new UserException();
         }
         $dataArray = $validate->getDataByRule(input('post.'));
-
+        if (!$user->address){
+            return [];
+        }
         //$dataArray['end_point_id'] = $uid;
         $dataArray['province_id'] = $user->address->province_id;
         $dataArray['school_id'] = $user->address->school_id;

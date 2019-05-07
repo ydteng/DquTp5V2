@@ -12,6 +12,7 @@ namespace app\api\controller\v1;
 use app\api\model\PackerInfo;
 use app\api\service\Email;
 use app\api\validate\ApplyScope;
+use app\lib\exception\AddressException;
 use app\lib\exception\EmailException;
 use app\lib\exception\UserException;
 use app\api\service\Token as TokenService;
@@ -38,9 +39,11 @@ class Scope
         $hour = subTime($packerInfo,'H');
         if ($hour>=24 && $packerInfo->status == 200){
             $packerInfo->save(['status' =>0]);
+            return ['status' =>0];
         }
         if ($hour>=48 && $packerInfo->status == 100){
             $packerInfo->save(['status' =>0]);
+            return ['status' =>0];
         }
         return ['status' =>$packerInfo->status];
 
@@ -54,8 +57,13 @@ class Scope
         if (!$user){
             throw new UserException();
         }
+
+        $userAddress = $user->address;
+        if(!$userAddress){
+            throw new AddressException();
+        }
+
         $dataArray = $validate->getDataByRule(input('post.'));
-        $dataArray['uid'] = $uid;
         $reason = $dataArray['reason'];
         unset($dataArray['reason']);
         $dataArray['status'] = 100;
@@ -66,6 +74,7 @@ class Scope
         else{
             $user->packer->save($dataArray);
         }
+        $dataArray['uid'] = $uid;
         $dataArray['reason'] = $reason;
         $dataArray['send_num'] = $user->send_num;
         $dataArray['pack_num'] = $user->pack_num;

@@ -9,6 +9,7 @@
 namespace app\api\service;
 
 
+use app\api\model\PackerInfo;
 use app\api\validate\IDMustBePositiveInt;
 use app\lib\exception\ForbiddenException;
 use app\lib\exception\TokenException;
@@ -17,6 +18,7 @@ use think\Exception;
 use think\Request;
 use app\lib\enum\ScopeEnum;
 use app\api\model\Order as OrderModel;
+use app\api\model\PackerInfo as PackerInfoModel;
 
 class Token
 {
@@ -44,6 +46,21 @@ class Token
         if ($uid == $receiverID || $uid == $packerID){
             return true;
         }
+        //以下为临时代码，下次更新将删除
+
+        $packerInfo = new PackerInfoModel();
+        $packerInfo = $packerInfo->where(['user_id' => $uid])->find();
+        if (!$packerInfo){
+            throw new ForbiddenException();
+        }
+        else if ($packerInfo->status == 300){
+            return true;
+        }
+        else if ($packerInfo->status == 100 || $packerInfo->status == 200){
+            throw new ForbiddenException();
+        }
+
+        //到上面的代码
 
         if ($scope){
             if ($scope == ScopeEnum::Super) {

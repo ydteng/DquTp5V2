@@ -7,8 +7,8 @@
  */
 
 return [
-    'img_prefix' => 'https://camserv.cn/images',
+    'img_prefix' => 'https://develop.camserv.cn/images',
     'token_expire_in' => '7200',
-    'limitPlaceNum' => '20',
+    'limitPlaceNum' => '5',
     'limitPackNum' => '20',
 ];
