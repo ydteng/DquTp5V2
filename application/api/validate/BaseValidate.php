@@ -9,6 +9,9 @@
 namespace app\api\validate;
 
 use app\lib\exception\ParameterException;
+use app\api\service\Token as TokenService;
+use app\lib\exception\ShortMessageException;
+use think\Cache;
 use think\Request;
 use think\Validate;
 
@@ -72,6 +75,23 @@ class BaseValidate extends Validate
             return true;
         } else {
             return false;
+        }
+    }
+
+    protected function CheckShortMessageCode($value, $rule = '', $data = '', $field = ''){
+        $uid = TokenService::getCurrentUid();
+        $key = $uid . 'ShortMessage';
+        $exist = Cache::get($key);
+        if (!$exist){
+            return $field . '验证码过期';
+        }
+        else{
+            if ($value == $exist['code']){
+                return true;
+            }
+            else{
+                return $field . '验证码错误';
+            }
         }
     }
 

@@ -62,6 +62,7 @@ class Address
             throw new UserException();
         }
         $dataArray = $validate->getDataByRule(input('post.'));
+        unset($dataArray['code']);
         $userAddress = $user->address;
         if (!$userAddress){
             $user->address()->save($dataArray);
