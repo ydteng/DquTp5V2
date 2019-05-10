@@ -14,6 +14,9 @@ class ApplyScope extends BaseValidate
     protected $rule = [
         'real_name' => 'require|isNotEmpty',
         'mobile' => 'require|isMobile',
+        'code' => 'require|CheckShortMessageCode',
         'reason' => 'require|isNotEmpty',
+        'img_1' => 'file|image|fileSize:10485760',
+        'img_2' => 'file|image|fileSize:10485760',
     ];
 }

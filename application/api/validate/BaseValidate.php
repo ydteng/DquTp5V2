@@ -8,6 +8,9 @@
 
 namespace app\api\validate;
 
+use app\api\model\User as UserModel;
+use app\api\service\ShortMessage;
+use app\lib\exception\MissException;
 use app\lib\exception\ParameterException;
 use app\api\service\Token as TokenService;
 use app\lib\exception\ShortMessageException;
@@ -78,21 +81,32 @@ class BaseValidate extends Validate
         }
     }
 
-    protected function CheckShortMessageCode($value, $rule = '', $data = '', $field = ''){
+    protected function requireCheckShortMessageCode($value, $rule = '', $data = '', $field = ''){
         $uid = TokenService::getCurrentUid();
-        $key = $uid . 'ShortMessage';
-        $exist = Cache::get($key);
-        if (!$exist){
-            return $field . '验证码过期';
+        $user = UserModel::get($uid);
+        $userAddress = $user->address;
+        if (!$userAddress && empty($value)){
+            return '用户地址不存在情况下,' . $field . '不允许为空';
         }
-        else{
-            if ($value == $exist['code']){
-                return true;
-            }
-            else{
-                return $field . '验证码错误';
+        else if(!$userAddress){
+            $result = ShortMessage::checkCode($uid,$value,$field);
+            return $result;
+        }
+        else if($userAddress){
+            $mobile = $userAddress->mobile;
+            $newMobile = Request::instance()->param('mobile');
+            if (!$mobile) {
+                throw new MissException(['msg' => '非法错误，手机号码不存在']);
+            }else{
+                if ($mobile == $newMobile){
+                    return true;
+                }else{
+                    $result = ShortMessage::checkCode($uid,$value,$field);
+                    return $result;
+                }
             }
         }
+
     }
 
     public function getDataByRule($arrays){
@@ -104,6 +118,9 @@ class BaseValidate extends Validate
         }
         $newArray = [];
         foreach ($this->rule as $key => $value) {
+            if ($key == 'img_1'||$key == 'img_2'){
+                continue;
+            }
             $newArray[$key] = $arrays[$key];
         }
         return $newArray;

@@ -16,6 +16,7 @@ use think\Cache;
 
 class ShortMessage
 {
+    //发送验证码
     public static function sendShortMessage($uid){
 
         $code = self::getRandNum();
@@ -53,6 +54,23 @@ class ShortMessage
             throw new ShortMessageException(['errorCode' => 16020,'msg' => $e->getErrorMessage()]);
         } catch (ServerException $e) {
             throw new ShortMessageException(['errorCode' => 16030,'msg' => $e->getErrorMessage()]);
+        }
+    }
+
+    //验证验证码是否正确
+    public static function checkCode($uid,$value,$field){
+        $key = $uid . 'ShortMessage';
+        $exist = Cache::get($key);
+        if (!$exist){
+            return $field . '验证码过期';
+        }
+        else{
+            if ($value == $exist['code']){
+                return true;
+            }
+            else{
+                return $field . '验证码错误';
+            }
         }
     }
 

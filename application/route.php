@@ -47,5 +47,6 @@ use think\Route;
 
 
     Route::get('api/:version/test/[:value]','api/:version.TimeTest/test');
+    Route::post('api/:version/test/[:value]','api/:version.TimeTest/test');
 
 
