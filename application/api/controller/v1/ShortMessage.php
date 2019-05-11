@@ -9,15 +9,18 @@
 namespace app\api\controller\v1;
 use app\api\service\ShortMessage as ShortMessageService;
 use app\api\service\Token as TokenService;
-use app\lib\exception\ShortMessageException;
-use think\Cache;
+use app\api\validate\isMobile;
+use app\lib\SuccessMessage;
 
 class ShortMessage
 {
     //获取短信验证码
     public function getShortMsgCode(){
+        (new isMobile())->goCheck();
+        $mobileNum = request()->param('mobile');
         $uid = TokenService::getCurrentUid();
-        ShortMessageService::sendShortMessage($uid);
+        ShortMessageService::sendShortMessage($uid,$mobileNum);
+        return new SuccessMessage();
     }
 //    //验证短信验证码
 //    public function VerifyShortMsgCode(){

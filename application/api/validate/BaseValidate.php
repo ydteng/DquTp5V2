@@ -89,24 +89,31 @@ class BaseValidate extends Validate
             return '用户地址不存在情况下,' . $field . '不允许为空';
         }
         else if(!$userAddress){
-            $result = ShortMessage::checkCode($uid,$value,$field);
+            $result = ShortMessage::checkCode($uid,$value);
             return $result;
         }
         else if($userAddress){
             $mobile = $userAddress->mobile;
             $newMobile = Request::instance()->param('mobile');
+
             if (!$mobile) {
                 throw new MissException(['msg' => '非法错误，手机号码不存在']);
             }else{
                 if ($mobile == $newMobile){
                     return true;
                 }else{
-                    $result = ShortMessage::checkCode($uid,$value,$field);
+                    $result = ShortMessage::checkCode($uid,$value);
                     return $result;
                 }
             }
         }
 
+    }
+
+    protected function requireMsgCheck($value, $rule = '', $data = '', $field = ''){
+        $uid = TokenService::getCurrentUid();
+        $result = ShortMessage::checkCode($uid,$value);
+        return $result;
     }
 
     public function getDataByRule($arrays){

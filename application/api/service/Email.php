@@ -8,10 +8,9 @@
 
 namespace app\api\service;
 use PHPMailer\PHPMailer\PHPMailer;
-
 class Email
 {
-    public static function send($str,$dataArr){
+    public static function send($str,$dataArr,$fileOn,$files = []){
 // 实例化PHPMailer核心类
         $mail = new PHPMailer();
 // 是否启用smtp的debug进行调试 开发环境建议开启 生产环境注释掉即可 默认关闭debug调试模式
@@ -46,12 +45,17 @@ class Email
         $mail->Subject = $str;
 // 添加邮件正文
         $mail->Body = self::msg($dataArr);
-// 为该邮件添加附件
-//        $mail->addAttachment('./example.pdf');
+// 为该邮件添加附件,写死传入两个文件
+        if($fileOn){
+            foreach ($files as $file)
+            $mail->addAttachment($file);
+        }
 // 发送邮件 返回状态
         $mail->send();
         return true;
     }
+
+
     //组合信息的函数
     public static function msg($arr){
         $msg = '';
@@ -61,4 +65,5 @@ class Email
         }
         return $msg;
     }
+
 }

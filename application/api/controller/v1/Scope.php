@@ -14,6 +14,8 @@ use app\api\service\Email;
 use app\api\validate\ApplyScope;
 use app\lib\exception\AddressException;
 use app\lib\exception\EmailException;
+
+use app\lib\exception\FileException;
 use app\lib\exception\UserException;
 use app\api\service\Token as TokenService;
 use app\api\model\User as UserModel;
@@ -52,32 +54,8 @@ class Scope
     public function applyScope(){
         $validate = new ApplyScope();
         $validate->goCheck();
-
-        // 获取表单上传文件
-        $files = request()->file('image');
-        foreach($files as $file){
-            // 移动到框架应用根目录/public/uploads/ 目录下
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-            if($info){
-                // 成功上传后 获取上传信息
-                // 输出 jpg
-                echo $info->getExtension();
-                // 输出 42a79759f284b767dfcb2a0197904287.jpg
-                echo $info->getFilename();
-            }else{
-                // 上传失败获取错误信息
-                echo $file->getError();
-            }
-        }
-
-
-
-
-
-
-
-
         $uid = TokenService::getCurrentUid();
+
         $user = UserModel::get($uid);
         if (!$user){
             throw new UserException();
@@ -89,6 +67,7 @@ class Scope
         }
 
         $dataArray = $validate->getDataByRule(input('post.'));
+        unset($dataArray['code']);
         $reason = $dataArray['reason'];
         unset($dataArray['reason']);
         $dataArray['status'] = 100;
@@ -99,13 +78,33 @@ class Scope
         else{
             $user->packer->save($dataArray);
         }
+        $dataArray['school'] = $userAddress->school->name;
         $dataArray['uid'] = $uid;
         $dataArray['reason'] = $reason;
         $dataArray['send_num'] = $user->send_num;
         $dataArray['pack_num'] = $user->pack_num;
-        Email::send('有人申请接单权限，请尽快处理',$dataArray);
+
+        //文件操作
+        $dateDir = date("md");
+        $filesList =[];
+        $ImgDirPath = ROOT_PATH . 'public' . DS . 'uploads' . DS . $dateDir . DS .$uid;
+        if(is_dir($ImgDirPath))
+        {
+            $imgList=scandir($ImgDirPath);
+            foreach ($imgList as $key => $img){
+                $filesList[$key] = $ImgDirPath . DS . $img;
+            }
+        }
+        else
+        {
+            throw new FileException(['msg' => '图片未上传成功']);
+        }
+
+        Email::send('有人申请接单权限，请尽快处理',$dataArray,true,$filesList);
         return new SuccessMessage();
     }
+
+
     //反馈
     public function feedback(){
         $uid = TokenService::getCurrentUid();
@@ -120,7 +119,7 @@ class Scope
             throw new EmailException(['errorCode' => '14020','msg' => '反馈错误，24小时只能反馈一次']);
         }
 
-        Email::send('意见反馈',$dataArray);
+        Email::send('意见反馈',$dataArray,false);
         return new SuccessMessage();
     }
     //协议信息
@@ -128,6 +127,5 @@ class Scope
         $title = '一校派服务协议';
         $text = file_get_contents('agreement.txt');
         return ['title' => $title,'text' => $text];
-
     }
 }

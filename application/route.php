@@ -37,7 +37,8 @@ use think\Route;
     Route::get('api/:version/scope/getStatus','api/:version.Scope/getStatus');
     Route::post('api/:version/feedback','api/:version.Scope/feedback');
     Route::get('api/:version/agreement','api/:version.Scope/agreement');
-    Route::get('api/:version/getShortMsgCode','api/:version.ShortMessage/getShortMsgCode');
+    Route::post('api/:version/getShortMsgCode','api/:version.ShortMessage/getShortMsgCode');
+    Route::post('api/:version/uploadImg','api/:version.Upload/uploadImg');
 
 
 

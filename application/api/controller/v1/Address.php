@@ -49,6 +49,7 @@ class Address
 
     public function createOrUpdateAddress()
     {
+
         $validate = new AddressNew();
         $validate->goCheck();
         //根据Token获取uid

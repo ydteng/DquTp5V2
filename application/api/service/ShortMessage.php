@@ -17,7 +17,7 @@ use think\Cache;
 class ShortMessage
 {
     //发送验证码
-    public static function sendShortMessage($uid){
+    public static function sendShortMessage($uid,$mobile){
 
         $code = self::getRandNum();
 
@@ -35,7 +35,7 @@ class ShortMessage
                 ->options([
                     'query' => [
                         'RegionId' => 'cn-hangzhou',
-                        'PhoneNumbers' => '15864031612',
+                        'PhoneNumbers' => $mobile,
                         'SignName' => '一校派',
                         'TemplateCode' => 'SMS_165040044',
                         'TemplateParam' => '{"code":"'.$code.'"}',
@@ -58,18 +58,18 @@ class ShortMessage
     }
 
     //验证验证码是否正确
-    public static function checkCode($uid,$value,$field){
+    public static function checkCode($uid,$value){
         $key = $uid . 'ShortMessage';
         $exist = Cache::get($key);
         if (!$exist){
-            return $field . '验证码过期';
+            throw new ShortMessageException(['errorCode' => 16040, 'msg' => '验证码错误或过期']);
         }
         else{
             if ($value == $exist['code']){
                 return true;
             }
             else{
-                return $field . '验证码错误';
+                throw new ShortMessageException(['errorCode' => 16040, 'msg' => '验证码错误或过期']);
             }
         }
     }
