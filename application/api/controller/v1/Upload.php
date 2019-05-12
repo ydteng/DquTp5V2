@@ -23,8 +23,8 @@ class Upload
         }
         foreach($files as $key => $value){
             // 移动到框架应用根目录/public/uploads/ 目录下
-            $dateDir = date("md");
-            $info = $value->rule('uniqid')->validate(['size'=>5242880,'ext'=>'jpg,png'])
+            $dateDir = date("Ymd");
+            $info = $value->rule('uniqid')->validate(['size'=>10485760,'ext'=>'jpg,png'])
                 ->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . $dateDir . DS .$uid);
             if($info){
                 // 成功上传后 获取上传信息

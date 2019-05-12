@@ -43,6 +43,7 @@ class Scope
             $packerInfo->save(['status' =>0]);
             return ['status' =>0];
         }
+        //申请中超过24小时
         if ($hour>=48 && $packerInfo->status == 100){
             $packerInfo->save(['status' =>0]);
             return ['status' =>0];
@@ -85,7 +86,7 @@ class Scope
         $dataArray['pack_num'] = $user->pack_num;
 
         //文件操作
-        $dateDir = date("md");
+        $dateDir = date("Ymd");
         $filesList =[];
         $ImgDirPath = ROOT_PATH . 'public' . DS . 'uploads' . DS . $dateDir . DS .$uid;
         if(is_dir($ImgDirPath))
