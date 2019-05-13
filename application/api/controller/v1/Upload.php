@@ -7,6 +7,8 @@
  */
 
 namespace app\api\controller\v1;
+use app\api\model\User;
+use app\lib\exception\AddressException;
 use app\lib\exception\FileException;
 use app\api\service\Token as TokenService;
 use app\lib\SuccessMessage;
@@ -15,6 +17,13 @@ class Upload
 {
     public function uploadImg(){
         $uid = TokenService::getCurrentUid();
+        $user = new User();
+        $user = $user::get($uid);
+        $userAddress = $user->address;
+        if (!$userAddress){
+            throw new AddressException();
+        }
+
         // 获取表单上传文件
         $filesList =[];
         $files = request()->file();
