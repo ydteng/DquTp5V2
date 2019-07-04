@@ -17,7 +17,7 @@ use app\api\model\Order as OrderModel;
 use app\api\service\Token as TokenService;
 use app\api\service\Order as OrderService;
 use app\api\validate\PagingParameter;
-use app\lib\exception\packException;
+use app\api\model\UserAddress as UserAddressModel;
 use app\lib\exception\PlaceOrderException;
 use app\lib\exception\UserException;
 use app\lib\SuccessMessage;
@@ -44,13 +44,14 @@ class Order extends BaseController
         if (!$user){
             throw new UserException();
         }
+        $userAddress = UserAddressModel::getUserAddress($uid);
         $dataArray = $validate->getDataByRule(input('post.'));
         if (!$user->address){
             return [];
         }
-        //$dataArray['end_point_id'] = $uid;
-        $dataArray['province_id'] = $user->address->province_id;
-        $dataArray['school_id'] = $user->address->school_id;
+        $dataArray['end_point'] = $userAddress->id;
+        $dataArray['province_id'] = $userAddress->province_id;
+        $dataArray['school_id'] = $userAddress->school_id;
         $dataArray['order_num'] = OrderService::makeOrderNum($uid);
         //判断订单是否重复
         $result = OrderService::repeatCheck($uid,$dataArray);

@@ -19,6 +19,7 @@ use app\lib\exception\FileException;
 use app\lib\exception\UserException;
 use app\api\service\Token as TokenService;
 use app\api\model\User as UserModel;
+use app\api\model\UserAddress as UserAddressModel;
 use app\api\model\PackerInfo as PackerInfoModel;
 use app\lib\SuccessMessage;
 use think\Cache;
@@ -62,7 +63,7 @@ class Scope
             throw new UserException();
         }
 
-        $userAddress = $user->address;
+        $userAddress = UserAddressModel::getUserAddress($uid);
         if(!$userAddress){
             throw new AddressException();
         }
@@ -85,6 +86,7 @@ class Scope
         $dataArray['send_num'] = $user->send_num;
         $dataArray['pack_num'] = $user->pack_num;
 
+        sleep(2);
         //文件操作
         $dateDir = date("Ymd");
         $filesList =[];

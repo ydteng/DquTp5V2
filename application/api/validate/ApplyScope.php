@@ -14,7 +14,7 @@ class ApplyScope extends BaseValidate
     protected $rule = [
         'real_name' => 'require|isNotEmpty',
         'mobile' => 'require|isMobile',
-        //'code' => 'requireMsgCheck',
+        'code' => 'requireMsgCheck',
         'reason' => 'require|isNotEmpty',
     ];
 }

@@ -27,7 +27,8 @@ class UserAddress extends BaseModel
 
     public static function getUserAddress($uid){
 
-        $address = self::with('province,school')->where(['user_id'=>$uid])->select();
+        $address = self::with('province,school')->where(['user_id'=>$uid])
+            ->page(1,1)->order('create_time desc')->select();
         if(!$address){
             return [];
         }

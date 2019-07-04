@@ -64,13 +64,7 @@ class Address
         }
         $dataArray = $validate->getDataByRule(input('post.'));
         unset($dataArray['code']);
-        $userAddress = $user->address;
-        if (!$userAddress){
-            $user->address()->save($dataArray);
-        }
-        else{
-            $user->address->save($dataArray);
-        }
+        $user->address()->save($dataArray);
         return json(new SuccessMessage(),201);
     }
 

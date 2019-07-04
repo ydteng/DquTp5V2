@@ -14,8 +14,8 @@ use app\lib\exception\MissException;
 use app\api\service\TimeOut as TimeOutService;
 use app\api\service\Order as OrderService;
 use app\lib\exception\packException;
-use app\lib\exception\UserException;
-use think\Build;
+use app\api\model\UserAddress as UserAddressModel;
+
 
 class Order extends BaseModel
 {
@@ -23,7 +23,7 @@ class Order extends BaseModel
 
     public function endPoint()
     {
-        return $this->hasOne('UserAddress','user_id','user_id');
+        return $this->hasOne('UserAddress','id','end_point');
     }
 
     public function packerAddress()
@@ -60,8 +60,7 @@ class Order extends BaseModel
     public static function getAllOrders($page,$uid)
     {
         //只返回同一学校的订单
-        $address = new UserAddress();
-        $address = $address->where(['user_id' => $uid])->find();
+        $address = UserAddressModel::getUserAddress($uid);
         if (!$address)
         {
             return [];

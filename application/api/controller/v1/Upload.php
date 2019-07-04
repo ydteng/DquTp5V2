@@ -7,7 +7,7 @@
  */
 
 namespace app\api\controller\v1;
-use app\api\model\User;
+use app\api\model\UserAddress as UserAddressModel;
 use app\lib\exception\AddressException;
 use app\lib\exception\FileException;
 use app\api\service\Token as TokenService;
@@ -17,9 +17,7 @@ class Upload
 {
     public function uploadImg(){
         $uid = TokenService::getCurrentUid();
-        $user = new User();
-        $user = $user::get($uid);
-        $userAddress = $user->address;
+        $userAddress = UserAddressModel::getUserAddress($uid);
         if (!$userAddress){
             throw new AddressException();
         }
