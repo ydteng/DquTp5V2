@@ -21,7 +21,7 @@ class ShortMessage
 
         $code = self::getRandNum();
 
-        AlibabaCloud::accessKeyClient('your_accessKey', 'Z8o690upMPj1WqjLj0XlKYJZzY2u07')
+        AlibabaCloud::accessKeyClient('your_accessKey', 'yours_own_string')  //填写自己的信息
             ->regionId('cn-hangzhou')
             ->asGlobalClient();
 
