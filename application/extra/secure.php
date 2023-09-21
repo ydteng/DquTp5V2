@@ -7,5 +7,5 @@
  */
 
 return [
-    'token_salt' =>'GGGWADfg4654fawfbhe'
+    'token_salt' =>'yours'
 ];
